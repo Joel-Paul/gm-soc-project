@@ -31,6 +31,11 @@ func load_scene(_scene_path: String) -> void:
 	await new_load_screen.loading_screen_ready
 	
 	_start_load()
+
+func _input(event: InputEvent) -> void:
+	if (event.is_action_pressed("reset")):
+		print("reset")
+		load_scene(scene_path);
 	
 func _start_load() -> void:
 	var state = ResourceLoader.load_threaded_request(scene_path, "", use_sub_threads)

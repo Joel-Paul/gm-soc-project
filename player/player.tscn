@@ -23,3 +23,9 @@ script = ExtResource("4_yw30f")
 [node name="AutoMove" type="Timer" parent="." unique_id=660976860]
 wait_time = 0.4
 one_shot = true
+
+[node name="BufferClear" type="Timer" parent="." unique_id=603196414]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="BufferClear" to="." method="_on_buffer_clear_timeout"]

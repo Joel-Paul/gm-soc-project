@@ -12,13 +12,6 @@ var use_tween_animation: bool = true
 func _ready() -> void:
 	button.pressed.connect(_on_pressed)
 
-# TEMPORARY IMPLEMENTATION OF RESET BUTTON
-# REMOVE THIS!!!!!!!!!!!!!!!!!!!!!!
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("reset"):
-		cell_position = original_position;
-		position = map.map_to_local(cell_position);
-
 #func move_to(cell: Vector2i):
 	## print(cell)
 	#var distance = (cell - cell_position).length();
@@ -49,7 +42,7 @@ func is_wall(cell: Vector2i) -> bool:
 		return false
 	return data.get_custom_data("is_wall")
 	
-func get_projectile(cell: Vector2i) -> Projectile:
+func get_projectile(cell: Vector2i) -> Crate:
 	for projectile in get_tree().get_nodes_in_group(&"projectile"):
 		if projectile.cell_position == cell:
 			return projectile

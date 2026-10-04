@@ -32,7 +32,7 @@ func set_step_length(n: int):
 	step_len = n
 
 # returns its destiation
-func move(dir: Vector2i, speed := step_len) -> Vector2i:
+func move(dir: Vector2i, is_player: bool = false, speed := step_len) -> Vector2i:
 	var dest: Vector2i
 	for i in range(1, speed + 1):
 		var path_pos := cell_pos + dir * i
@@ -40,7 +40,7 @@ func move(dir: Vector2i, speed := step_len) -> Vector2i:
 			dest = path_pos
 		print(dest)
 	
-	cell_pos = _move_to(cell_pos, dest)
+	cell_pos = _move_to(cell_pos, dest, !is_player);
 	return cell_pos
 
 # checks tile and returns true if traversable, false if not + some extra logic
@@ -74,9 +74,17 @@ func _path_logic(path_pos: Vector2i, dir: Vector2i) -> bool:
 			#Potion.data[tile_data[1]]["effect"].call(object)
 		#return true
 
-func _move_to(curr_cell: Vector2i, dest_cell: Vector2i) -> Vector2i:
+func _move_to(curr_cell: Vector2i, dest_cell: Vector2i, scale_time: bool = true) -> Vector2i:
+	# Temporary message:
+	# 	scale_time is an extra parameter to make the tween scale the time with the distance
+	# 	if this is off, the tween time is always 0.07 seconds (ideal for the player, but not
+	#	for the crates)
+	
 	var distance = (dest_cell - curr_cell).length();
-	var tween_time = tween_time * distance;
+	var tween_time_changed = tween_time;
+	
+	if (scale_time):
+		tween_time_changed *= distance;
 	
 	var local_pos = Global.game_objects.map_to_local(dest_cell)
 	if tween_anim:
@@ -84,7 +92,7 @@ func _move_to(curr_cell: Vector2i, dest_cell: Vector2i) -> Vector2i:
 			tween.kill()
 		tween = create_tween()
 		tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_LINEAR)
-		tween.tween_property(object, "position", local_pos, tween_time);
+		tween.tween_property(object, "position", local_pos, tween_time_changed);
 	else:
 		object.position = local_pos
 	Global.game_entities.move_cell(curr_cell, dest_cell)
