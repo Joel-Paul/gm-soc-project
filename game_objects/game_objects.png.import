@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cymdl2sg2tqt3"
-path="res://.godot/imported/smoker.png-737b0c151ab73b0065977e7766f1663c.ctex"
+uid="uid://c1axnp01iidu6"
+path="res://.godot/imported/game_objects.png-432247b649ba12de50d8bc525af20bf8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://smoker.png"
-dest_files=["res://.godot/imported/smoker.png-737b0c151ab73b0065977e7766f1663c.ctex"]
+source_file="res://game_objects/game_objects.png"
+dest_files=["res://.godot/imported/game_objects.png-432247b649ba12de50d8bc525af20bf8.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7058nt7xil3i"
-path="res://.godot/imported/projectile 32x32.png-5f52b9b89c065c3a6d9c553681e806bd.ctex"
+uid="uid://cvej3ry4tdrok"
+path="res://.godot/imported/testTileset.png-a2296133a5b4c99263db396abea6fce9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://projectile 32x32.png"
-dest_files=["res://.godot/imported/projectile 32x32.png-5f52b9b89c065c3a6d9c553681e806bd.ctex"]
+source_file="res://background/testTileset.png"
+dest_files=["res://.godot/imported/testTileset.png-a2296133a5b4c99263db396abea6fce9.ctex"]
 
 [params]
 
