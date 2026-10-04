@@ -16,4 +16,4 @@ func _on_player_move() -> void:
 	
 	if player_cell == cell_position:
 		#print(1)
-		GlobalSignal.on_green_tile.emit()
+		Global.on_green_tile.emit()
