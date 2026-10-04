@@ -56,10 +56,10 @@ func _path_logic(path_pos: Vector2i, dir: Vector2i) -> bool:
 			pass
 		elif tile_data[0] == GameObjects.IS_EFFECT and effects_enabled:
 			Potion.data[tile_data[1]]["effect"].call(object)
-	var entity = Global.game_entities.game_entities[path_pos]
-	if entity:
+	if path_pos in Global.game_entities.entity_dict:
+		var entity = Global.game_entities.entity_dict[path_pos]
 		entity.get_node_or_null("GridMovement_C").move(dir, push_strength)
-		
+			
 	return true
 
 #func _land_logic(path_pos: Vector2i) -> bool:
@@ -87,13 +87,13 @@ func _move_to(curr_cell: Vector2i, dest_cell: Vector2i) -> Vector2i:
 		tween.tween_property(object, "position", local_pos, tween_time);
 	else:
 		object.position = local_pos
-	Global.game_entities.game_entities[dest_cell] = Global.game_entities.game_entities[curr_cell]
-	Global.game_entities.erase(curr_cell)
+	Global.game_entities.move_cell(curr_cell, dest_cell)
 	return dest_cell
 	
 	
 
 func teleport(coords: Vector2i):
+	Global.game_entities.move_cell(cell_pos, coords)
 	cell_pos = coords
 	var local_pos = Global.game_objects.map_to_local(coords)
 	object.position = local_pos

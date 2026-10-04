@@ -16,8 +16,8 @@ func player_interaction(player_pos: Vector2i)->Array:
 	
 	if !cell_data:
 		return []
-	#print(cell_data.has_custom_data("is_type"))
-	var return_array := [cell_data.get_custom_data("is_type"), null]
+	#print(cell_data.has_custom_data("is_object"))
+	var return_array := [cell_data.get_custom_data("is_object"), null]
 	if return_array[0] != IS_WALL:
 		return_array[1] = cell_data.get_custom_data("potion_type")
 		
