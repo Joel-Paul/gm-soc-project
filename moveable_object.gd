@@ -19,22 +19,22 @@ func _input(event: InputEvent) -> void:
 		cell_position = original_position;
 		position = map.map_to_local(cell_position);
 
-func move_to(cell: Vector2i):
-	# print(cell)
-	var distance = (cell - cell_position).length();
-	var tween_time = 0.07 * distance;
-	
-	cell_position = cell
-	
-	if use_tween_animation:
-		if tween:
-			tween.kill()
-		tween = create_tween()
-		tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_LINEAR)
-		tween.tween_property(self, "position", map.map_to_local(cell_position), tween_time);
-	else:
-		position = map.map_to_local(cell_position)
-	#return true
+#func move_to(cell: Vector2i):
+	## print(cell)
+	#var distance = (cell - cell_position).length();
+	#var tween_time = 0.07 * distance;
+	#
+	#cell_position = cell
+	#
+	#if use_tween_animation:
+		#if tween:
+			#tween.kill()
+		#tween = create_tween()
+		#tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_LINEAR)
+		#tween.tween_property(self, "position", map.map_to_local(cell_position), tween_time);
+	#else:
+		#position = map.map_to_local(cell_position)
+	##return true
 func switch_animation() -> void:
 	if use_tween_animation:
 		use_tween_animation = false

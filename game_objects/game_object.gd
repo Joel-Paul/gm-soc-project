@@ -1,5 +1,6 @@
 extends TileMapLayer
 class_name GameObjects
+enum {IS_WALL, IS_OBSTACLE, IS_POTION, IS_EFFECT, IS_MOVEABLE}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,7 +18,7 @@ func player_interaction(player_pos: Vector2i)->Array:
 		return []
 	#print(cell_data.has_custom_data("is_type"))
 	var return_array := [cell_data.get_custom_data("is_type"), null]
-	if return_array[0] != Global.Tile.IS_WALL:
+	if return_array[0] != IS_WALL:
 		return_array[1] = cell_data.get_custom_data("potion_type")
 		
 	return return_array

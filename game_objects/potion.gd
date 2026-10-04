@@ -3,17 +3,17 @@ class_name Potion
 
 enum Type {SPEED_UP, SLOW_DOWN, STRENGTH}
 
-var data = {
+static var data = {
 	Type.SPEED_UP: {
-		"effect": null
+		"effect": _speed_up
 	},
 	
 	Type.SLOW_DOWN: {
-		"effect": null
+		"effect": _slow_down
 	},
 	
 	Type.STRENGTH: {
-		"effect": null
+		"effect": _strength
 	},
 }
 # Called when the node enters the scene tree for the first time.
@@ -24,3 +24,17 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+static func _speed_up(target: Node2D):
+	var movement = target.get_node_or_null("GridMovement_C")
+	if movement:
+		movement.set_step_length(2)
+		
+static func _slow_down(target: Node2D):
+	var movement = target.get_node_or_null("GridMovement_C")
+	if movement:
+		movement.set_step_length(1)
+
+static func _strength(target: Node2D):
+	pass
+	

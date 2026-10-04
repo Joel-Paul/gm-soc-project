@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://coln84fdlp385" path="res://player/player.gd" id="1_rkbax"]
 [ext_resource type="Texture2D" uid="uid://bho2o00gv2ry4" path="res://player/player.png" id="2_rkbax"]
+[ext_resource type="PackedScene" uid="uid://bfnn1ansuqnmu" path="res://components/grid_movement_c.tscn" id="3_g1dw6"]
+[ext_resource type="Script" uid="uid://dp8ioshac5v3b" path="res://player/inventory.gd" id="4_yw30f"]
 
 [node name="Player" type="Node2D" unique_id=267222947]
 z_index = 1
@@ -12,12 +14,12 @@ position = Vector2(0, -9)
 texture = ExtResource("2_rkbax")
 region_rect = Rect2(32, 160, 32, 32)
 
-[node name="MoveBuffer" type="Timer" parent="." unique_id=980354659]
-wait_time = 0.07
-one_shot = true
+[node name="GridMovement_C" parent="." unique_id=329636349 node_paths=PackedStringArray("object") instance=ExtResource("3_g1dw6")]
+object = NodePath("..")
 
-[node name="AutoMove" type="Timer" parent="." unique_id=1477970818]
+[node name="Inventory" type="Node2D" parent="." unique_id=1087209975]
+script = ExtResource("4_yw30f")
+
+[node name="AutoMove" type="Timer" parent="." unique_id=660976860]
 wait_time = 0.4
 one_shot = true
-
-[connection signal="timeout" from="MoveBuffer" to="." method="_on_move_buffer_timeout"]
