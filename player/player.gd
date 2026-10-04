@@ -22,8 +22,8 @@ var buffered_input: Vector2i = Vector2i.ZERO;
 func _ready() -> void:
 	super._ready()
 	#button.pressed.connect(_on_pressed)
-	GlobalSignal.on_red_tile.connect(_on_red_tile)
-	GlobalSignal.on_green_tile.connect(_on_green_tile)
+	Global.on_red_tile.connect(_on_red_tile)
+	Global.on_green_tile.connect(_on_green_tile)
 
 func _input(event: InputEvent) -> void:
 	_receive_move_input(event);
@@ -58,9 +58,10 @@ func _move(dir: Vector2i) -> void:
 	player_move.emit();
 	
 	var dest: Vector2i = cell_position + (dir * step_len);
-	
-	if (is_wall(dest) or !_check_projectile(dir, dest)):
-		return;
+	var tile_data := Global.tile_data(dest)
+	if !tile_data.is_empty():
+		if (tile_data[0] == Global.Tile.IS_WALL or !_check_projectile(dir, dest)):
+			return;
 	
 	move_to(dest);
 	

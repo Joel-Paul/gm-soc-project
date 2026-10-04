@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://g85iglst35h1" path="res://game_objects/projectile.tscn" id="6_c5j67"]
 [ext_resource type="PackedScene" uid="uid://bdn4hlh6nw5qv" path="res://game_objects/green_tile.tscn" id="7_t870e"]
 [ext_resource type="Texture2D" uid="uid://c1axnp01iidu6" path="res://game_objects/game_objects.png" id="9_c5j67"]
+[ext_resource type="Script" uid="uid://b5n108y2ixls2" path="res://game_objects/game_object.gd" id="10_8tdwu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wijl4"]
 texture = ExtResource("1_eu44l")
@@ -80,7 +81,7 @@ texture = ExtResource("3_eu44l")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
-1:0/0/custom_data_0 = true
+1:0/0/custom_data_0 = 1
 0:1/0 = 0
 1:1/0 = 0
 
@@ -88,28 +89,34 @@ texture_region_size = Vector2i(32, 32)
 texture = ExtResource("9_c5j67")
 texture_region_size = Vector2i(32, 32)
 1:0/0 = 0
-1:0/0/custom_data_0 = true
 0:1/0 = 0
+0:1/0/custom_data_0 = 2
+0:1/0/custom_data_1 = 1
 1:1/0 = 0
+1:1/0/custom_data_0 = 2
 0:2/0 = 0
+0:2/0/custom_data_0 = 2
+0:2/0/custom_data_1 = 2
 1:2/0 = 0
+1:2/0/custom_data_0 = 1
+1:2/0/custom_data_1 = 1
 0:3/0 = 0
+0:3/0/custom_data_0 = 1
 1:3/0 = 0
+1:3/0/custom_data_0 = 1
+1:3/0/custom_data_1 = 2
 0:4/0 = 0
-0:4/0/custom_data_0 = true
 1:4/0 = 0
-1:4/0/custom_data_0 = true
 0:5/0 = 0
-0:5/0/custom_data_0 = true
 1:5/0 = 0
-1:5/0/custom_data_0 = true
 0:6/0 = 0
-0:6/0/custom_data_0 = true
 
 [sub_resource type="TileSet" id="TileSet_0xm2m"]
 tile_size = Vector2i(32, 32)
-custom_data_layer_0/name = "is_wall"
-custom_data_layer_0/type = 1
+custom_data_layer_0/name = "is_type"
+custom_data_layer_0/type = 2
+custom_data_layer_1/name = "potion_type"
+custom_data_layer_1/type = 2
 sources/0 = SubResource("TileSetScenesCollectionSource_0xm2m")
 sources/1 = SubResource("TileSetScenesCollectionSource_1bvp3")
 sources/2 = SubResource("TileSetAtlasSource_lquwl")
@@ -129,6 +136,7 @@ tile_set = SubResource("TileSet_ad0uy")
 [node name="GameObject" type="TileMapLayer" parent="." unique_id=2118077119]
 tile_map_data = PackedByteArray("AAD3//v/AwABAAUAAAD3//7/AwABAAQAAAD3////AwABAAUAAAD3/wAAAwABAAQAAAD3/wEAAwABAAUAAAD3/wIAAwABAAQAAAD3/wMAAwABAAUAAAD3/wQAAwABAAQAAAD4/wQAAwAAAAQAAAD5/wQAAwABAAQAAAD6/wQAAwAAAAQAAAD7/wQAAwABAAQAAAD8/wQAAwAAAAQAAAD9/wQAAwABAAQAAAD+/wQAAwAAAAQAAAD//wQAAwABAAQAAAAAAAQAAwAAAAQAAAAAAPv/AwAAAAUAAAD///v/AwABAAUAAAD+//v/AwAAAAUAAAD7//v/AwABAAUAAAD6//v/AwAAAAUAAAD5//v/AwABAAUAAAD4//v/AwAAAAUAAAABAAQAAwABAAQAAAACAAQAAwAAAAQAAAADAAQAAwABAAQAAAAEAAQAAwAAAAQAAAAFAAQAAwABAAQAAAAGAAQAAwAAAAQAAAAHAAQAAwABAAQAAAAIAAQAAwAAAAQAAAAIAAEAAwAAAAUAAAAIAAAAAwAAAAQAAAAIAP//AwAAAAUAAAAIAP7/AwAAAAQAAAAIAP3/AwAAAAUAAAAIAPz/AwAAAAQAAAAIAPv/AwAAAAUAAAAHAPv/AwABAAUAAAAGAPv/AwAAAAUAAAAFAPv/AwABAAUAAAAEAPv/AwAAAAUAAAADAPv/AwABAAUAAAACAPv/AwAAAAUAAAABAPv/AwABAAUAAAD3/wUAAwABAAUAAAD4/wUAAwAAAAUAAAD5/wUAAwABAAUAAAD6/wUAAwAAAAUAAAD7/wUAAwABAAUAAAD8/wUAAwAAAAUAAAD9/wUAAwABAAUAAAD+/wUAAwAAAAUAAAD//wUAAwABAAUAAAAAAAUAAwAAAAUAAAABAAUAAwABAAUAAAACAAUAAwAAAAUAAAADAAUAAwABAAUAAAAEAAUAAwAAAAUAAAAFAAUAAwABAAUAAAAGAAUAAwAAAAUAAAAHAAUAAwABAAUAAAAIAAUAAwAAAAUAAAAJAAUAAwABAAUAAAD2//v/AwAAAAUAAAD2//7/AwAAAAQAAAD2////AwAAAAUAAAD2/wAAAwAAAAQAAAD2/wEAAwAAAAUAAAD2/wIAAwAAAAQAAAD2/wMAAwAAAAUAAAD2/wQAAwAAAAQAAAD2/wUAAwAAAAUAAAAJAAQAAwABAAQAAAAJAAEAAwABAAUAAAAJAAAAAwABAAQAAAAJAP//AwABAAUAAAAJAPv/AwABAAUAAAAJAPz/AwABAAQAAAAJAP3/AwABAAUAAAAJAP7/AwABAAQAAAD2//r/AwAAAAQAAAD3//r/AwABAAQAAAD4//r/AwAAAAQAAAD5//r/AwABAAQAAAD6//r/AwAAAAQAAAD7//r/AwABAAQAAAD+//r/AwAAAAQAAAD///r/AwABAAQAAAAAAPr/AwAAAAQAAAABAPr/AwABAAQAAAACAPr/AwAAAAQAAAADAPr/AwABAAQAAAAEAPr/AwAAAAQAAAAFAPr/AwABAAQAAAAGAPr/AwAAAAQAAAAHAPr/AwABAAQAAAAIAPr/AwAAAAQAAAAJAPr/AwABAAQAAAD5//3/AAAAAAAAAQD8//3/AwABAAEAAAD9//3/AwABAAAAAAD9//7/AwABAAAAAAD+//7/AwABAAAAAAD+//3/AQAAAAAAAgD8//7/AwABAAEAAAD8/wAAAwAAAAIAAAD9/wAAAQAAAAAAAgADAAAAAwABAAAAAAD8/wEAAwAAAAIAAAD9/wEAAQAAAAAAAgADAAEAAQAAAAAAAgD8//r/AwAAAAQAAAD8//v/AwAAAAUAAAD9//r/AwABAAQAAAD9//v/AwABAAUAAAAFAP3/AwABAAIAAAD4/wMAAwAAAAYAAAD5/wMAAwAAAAYAAAD4/wIAAwAAAAYAAAAAAPz/AwAAAAYAAAABAPz/AwAAAAYAAAA=")
 tile_set = SubResource("TileSet_0xm2m")
+script = ExtResource("10_8tdwu")
 
 [node name="Control" type="Control" parent="." unique_id=201353498]
 visible = false

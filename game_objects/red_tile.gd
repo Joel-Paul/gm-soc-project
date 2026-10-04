@@ -16,7 +16,7 @@ func _on_player_move() -> void:
 	
 	if player_cell == cell_position:
 		#print(1)
-		GlobalSignal.on_red_tile.emit()
+		Global.on_red_tile.emit()
 		
 #func _find_player() -> Player:
 	#for cell in map.get_children():
