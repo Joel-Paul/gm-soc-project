@@ -23,3 +23,5 @@ script = ExtResource("4_yw30f")
 [node name="AutoMove" type="Timer" parent="." unique_id=660976860]
 wait_time = 0.4
 one_shot = true
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1762894592]

@@ -1,26 +1,29 @@
 extends TileMapLayer
 class_name GameObjects
-enum {IS_WALL, IS_OBSTACLE, IS_POTION, IS_EFFECT, IS_MOVEABLE}
+enum Type {IS_WALL, IS_OBSTACLE, IS_POTION, IS_EFFECT, IS_MOVEABLE}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.game_objects = self
+	var tileset := get_tile_set()
+	var atlas := tileset.get_source(3)
+	for p in Potion.data:
+		Potion.data[p]["potion_atlas_coords"] = find_tile(atlas, Type.IS_POTION, p)
+		Potion.data[p]["effect_atlas_coords"] = find_tile(atlas, Type.IS_EFFECT, p)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func break_potion(cell: Vector2i, p: Potion.Type):
+	set_cell(cell, 3, Potion.data[p]["effect_atlas_coords"])
+	print(cell, Potion.data[p]["effect_atlas_coords"])
 
-func player_interaction(player_pos: Vector2i)->Array:
-	var cell_data := get_cell_tile_data(player_pos)
+func collect_potion(cell: Vector2i):
+	erase_cell(cell)
 	
-	if !cell_data:
-		return []
-	#print(cell_data.has_custom_data("is_object"))
-	var return_array := [cell_data.get_custom_data("is_object"), null]
-	if return_array[0] != IS_WALL:
-		return_array[1] = cell_data.get_custom_data("potion_type")
-		
-	return return_array
-		
+func find_tile(atlas: TileSetAtlasSource, is_object: int, potion_type: int) -> Vector2i:
+	for i in atlas.get_tiles_count():
+		var coords := atlas.get_tile_id(i)
+		var data := atlas.get_tile_data(coords, 0)
+		if data.get_custom_data("is_object") == is_object and data.get_custom_data("potion_type") == potion_type:
+			return coords
+	return Vector2i(-1, -1)
 	

@@ -16,7 +16,7 @@ var has_superpower := false
 var step_len := 1
 
 @onready var movement := $GridMovement_C
-@onready var inventory := $Inventory
+@onready var inventory: Inventory = $Inventory
 
 @onready var automove_timer: Timer = $AutoMove;
 #@onready var move_buffer: Timer = $MoveBuffer;

@@ -76,18 +76,26 @@ func _path_logic(path_pos: Vector2i, dir: Vector2i, is_grounded: bool) -> bool:
 		if pushed_pos == path_pos:
 			return false
 
-	var tile_data := Global.tile_data(path_pos)
-	if !tile_data.is_empty():
-		match tile_data[0]:
-			GameObjects.IS_WALL:
+	var tile_data := Global.game_objects.get_cell_tile_data(path_pos)
+	if tile_data:
+		var tile_type: GameObjects.Type = tile_data.get_custom_data("is_object")
+		match tile_type:
+			GameObjects.Type.IS_WALL:
 				return false
-			GameObjects.IS_POTION:
-				if object is not Player:
-					pass
-			GameObjects.IS_EFFECT:
+			GameObjects.Type.IS_POTION:
+				if is_grounded:
+					var potion_type: Potion.Type = tile_data.get_custom_data("potion_type")
+					if object is Player:
+						if object.inventory.add_potion(potion_type):
+							Global.game_objects.collect_potion(path_pos)
+							return true
+					# break potion if not player or player inventory full
+					Global.game_objects.break_potion(path_pos, potion_type)
+			GameObjects.Type.IS_EFFECT:
 				if effects_enabled and is_grounded:
-					Potion.data[tile_data[1]]["effect"].call(object)
-			GameObjects.IS_OBSTACLE:
+					var potion_type: Potion.Type = tile_data.get_custom_data("potion_type")
+					Potion.data[potion_type]["effect"].call(object)
+			GameObjects.Type.IS_OBSTACLE:
 				if is_grounded:
 					return false
 			_:
