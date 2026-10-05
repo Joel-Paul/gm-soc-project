@@ -17,18 +17,21 @@ func _ready() -> void:
 	
 # Entry point for callers.
 # Pass a valid scene path (for example: &"res://levels/level_1.tscn").
-func load_scene(_scene_path: String) -> void:
+# Instant skips the transition, only really for when starting up the game
+func load_scene(_scene_path: String, instant: bool = false) -> void:
 	scene_path = _scene_path
 	
 	if loading_scene == null:
 		push_error("loading_scene is not set, cannot load scene: " + _scene_path)
 		return
-	var new_load_screen = loading_scene.instantiate()
-	add_child(new_load_screen)
-	progress_changed.connect(new_load_screen._on_progress_changed)
-	load_finished.connect(new_load_screen._on_load_finished)
+		
+	if (!instant):
+		var new_load_screen = loading_scene.instantiate()
+		add_child(new_load_screen)
+		progress_changed.connect(new_load_screen._on_progress_changed)
+		load_finished.connect(new_load_screen._on_load_finished)
 
-	await new_load_screen.loading_screen_ready
+		await new_load_screen.loading_screen_ready
 	
 	_start_load()
 
