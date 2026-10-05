@@ -7,17 +7,11 @@ class_name GridMovement_C
 @export var object: Node2D
 
 # logic variables
-const MOVE_DIRECTIONS: Dictionary = {
-	"up": Vector2i(0, -1),
-	"down": Vector2i(0, 1),
-	"left": Vector2i(-1, 0),
-	"right": Vector2i(1, 0)
-}
 
 @export var step_len := 1
 var cell_pos := Vector2i.ZERO
 var push_strength := 1
-@export var direction := MOVE_DIRECTIONS["right"]
+@export var facing := Vector2i.RIGHT
 @export var tween_time := 0.07
 
 # anim variables
@@ -33,6 +27,7 @@ func set_step_length(n: int):
 
 # returns its destiation
 func move(dir: Vector2i, speed := 0) -> Vector2i:
+	facing = dir
 	speed += step_len
 	var dest = cell_pos + dir * speed
 	var path_pos := cell_pos + dir

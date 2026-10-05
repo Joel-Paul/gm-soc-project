@@ -17,11 +17,10 @@ region_rect = Rect2(32, 160, 32, 32)
 [node name="GridMovement_C" parent="." unique_id=329636349 node_paths=PackedStringArray("object") instance=ExtResource("3_g1dw6")]
 object = NodePath("..")
 
-[node name="Inventory" type="Node2D" parent="." unique_id=1087209975]
+[node name="Inventory" type="Node2D" parent="." unique_id=1087209975 node_paths=PackedStringArray("movement")]
 script = ExtResource("4_yw30f")
+movement = NodePath("../GridMovement_C")
 
 [node name="AutoMove" type="Timer" parent="." unique_id=660976860]
 wait_time = 0.4
 one_shot = true
-
-[node name="Node2D" type="Node2D" parent="." unique_id=1762894592]

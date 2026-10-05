@@ -31,6 +31,7 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	_receive_direction(event)
+	_receive_throw(event)
 	
 
 func _physics_process(delta: float) -> void:
@@ -93,6 +94,10 @@ func _receive_auto_direction() -> void:
 		if Input.is_action_pressed(direction) and automove_timer.is_stopped():
 			buffered_input = MOVE_DIRECTIONS[direction];
 			break;
+
+func _receive_throw(event: InputEvent) -> void:
+	if event.is_action_pressed("throw"):
+		inventory.throw()
 
 #func _on_red_tile() -> void:
 	#step_len = 2
