@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://rim03l1msdp0"]
+
+[ext_resource type="Script" uid="uid://c6csosdnv34f2" path="res://game_scenes/title_screen.gd" id="1_tccbf"]
+[ext_resource type="Texture2D" uid="uid://dlcbr67wg2u31" path="res://titlescreen/game_title.png" id="1_x0ht8"]
+[ext_resource type="Texture2D" uid="uid://b3ec2uq70tlhm" path="res://titlescreen/title_background.png" id="2_751wv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mti6b"]
+
+[sub_resource type="Theme" id="Theme_mti6b"]
+default_font_size = 40
+Button/colors/font_hover_color = Color(0.9490196, 0.7176471, 0.21568628, 1)
+Button/colors/font_hover_pressed_color = Color(0.9490196, 0.7176471, 0.21568628, 1)
+Button/colors/font_pressed_color = Color(0.9490196, 0.7176471, 0.21568628, 1)
+Button/styles/normal = SubResource("StyleBoxEmpty_mti6b")
+
+[node name="TitleScreen" type="Node" unique_id=3450587]
+script = ExtResource("1_tccbf")
+
+[node name="Control" type="Control" parent="." unique_id=930327056]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1584306556]
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_751wv")
+
+[node name="CenterContainer" type="CenterContainer" parent="Control" unique_id=2068012948]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -316.0
+offset_top = 88.0
+offset_right = -141.0
+offset_bottom = 202.0
+grow_horizontal = 0
+offset_transform_position = Vector2(330, -152)
+offset_transform_scale = Vector2(2, 2)
+
+[node name="TitleImage" type="TextureRect" parent="Control/CenterContainer" unique_id=1134087241]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_scale = Vector2(2, 2)
+texture = ExtResource("1_x0ht8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=1245046520]
+layout_mode = 0
+offset_left = 745.0
+offset_top = 289.0
+offset_right = 1091.0
+offset_bottom = 602.0
+theme_override_constants/separation = 16
+metadata/_edit_group_ = true
+
+[node name="Play" type="Button" parent="Control/VBoxContainer" unique_id=394334908]
+layout_mode = 2
+theme = SubResource("Theme_mti6b")
+text = "Play"
+
+[node name="Settings" type="Button" parent="Control/VBoxContainer" unique_id=1638727064]
+layout_mode = 2
+theme = SubResource("Theme_mti6b")
+text = "Settings"
+
+[node name="Credits" type="Button" parent="Control/VBoxContainer" unique_id=1265598173]
+layout_mode = 2
+theme = SubResource("Theme_mti6b")
+text = "Credits"
+
+[node name="Exit" type="Button" parent="Control/VBoxContainer" unique_id=370873557]
+layout_mode = 2
+theme = SubResource("Theme_mti6b")
+text = "Exit"
+
+[connection signal="pressed" from="Control/VBoxContainer/Play" to="." method="_on_play_pressed"]
