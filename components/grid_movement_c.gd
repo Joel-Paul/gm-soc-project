@@ -7,18 +7,13 @@ class_name GridMovement_C
 @export var object: Node2D
 
 # logic variables
-const MOVE_DIRECTIONS: Dictionary = {
-	"up": Vector2i(0, -1),
-	"down": Vector2i(0, 1),
-	"left": Vector2i(-1, 0),
-	"right": Vector2i(1, 0)
-}
 
 @export var step_len := 1
 var cell_pos := Vector2i.ZERO
 var push_strength := 1
-@export var direction := MOVE_DIRECTIONS["right"]
+@export var facing := Vector2i.RIGHT
 @export var tween_time := 0.07
+@export var scale_tween := true
 
 # anim variables
 var tween: Tween
@@ -32,13 +27,14 @@ func set_step_length(n: int):
 	step_len = n
 
 # returns its destiation
-func move(dir: Vector2i, is_player: bool = false, speed := 0) -> Vector2i:
+func move(dir: Vector2i, speed := 0) -> Vector2i:
+	facing = dir
 	speed += step_len
 	var dest = cell_pos + dir * speed
 	var path_pos := cell_pos + dir
 	dest = _check_path(path_pos, dest, dir)
 	dest = dest if dest else cell_pos
-	cell_pos = _move_to(cell_pos, dest, !is_player);
+	cell_pos = _move_to(cell_pos, dest);
 	return cell_pos
 
 func _check_path(path_pos: Vector2i, dest: Vector2i, dir: Vector2i):
@@ -76,18 +72,26 @@ func _path_logic(path_pos: Vector2i, dir: Vector2i, is_grounded: bool) -> bool:
 		if pushed_pos == path_pos:
 			return false
 
-	var tile_data := Global.tile_data(path_pos)
-	if !tile_data.is_empty():
-		match tile_data[0]:
-			GameObjects.IS_WALL:
+	var tile_data := Global.game_objects.get_cell_tile_data(path_pos)
+	if tile_data:
+		var tile_type: GameObjects.Type = tile_data.get_custom_data("is_object")
+		match tile_type:
+			GameObjects.Type.IS_WALL:
 				return false
-			GameObjects.IS_POTION:
-				if object is not Player:
-					pass
-			GameObjects.IS_EFFECT:
+			GameObjects.Type.IS_POTION:
+				if is_grounded:
+					var potion_type: Potion.Type = tile_data.get_custom_data("potion_type")
+					if object is Player:
+						if object.inventory.add_potion(potion_type):
+							Global.game_objects.collect_potion(path_pos)
+							return true
+					# break potion if not player or player inventory full
+					Global.game_objects.break_potion(path_pos, potion_type)
+			GameObjects.Type.IS_EFFECT:
 				if effects_enabled and is_grounded:
-					Potion.data[tile_data[1]]["effect"].call(object)
-			GameObjects.IS_OBSTACLE:
+					var potion_type: Potion.Type = tile_data.get_custom_data("potion_type")
+					Potion.data[potion_type]["effect"].call(object)
+			GameObjects.Type.IS_OBSTACLE:
 				if is_grounded:
 					return false
 			_:
@@ -95,16 +99,11 @@ func _path_logic(path_pos: Vector2i, dir: Vector2i, is_grounded: bool) -> bool:
 			
 	return true
 
-func _move_to(curr_cell: Vector2i, dest_cell: Vector2i, scale_time: bool = true) -> Vector2i:
-	# Temporary message:
-	# 	scale_time is an extra parameter to make the tween scale the time with the distance
-	# 	if this is off, the tween time is always 0.07 seconds (ideal for the player, but not
-	#	for the crates)
+func _move_to(curr_cell: Vector2i, dest_cell: Vector2i) -> Vector2i:
 	var distance = (dest_cell - curr_cell).length();
-	var tween_time_changed = tween_time;
-	
-	if (scale_time):
-		tween_time_changed *= distance;
+	var mod_tween_time = tween_time
+	if (scale_tween):
+		mod_tween_time *= distance;
 	
 	var local_pos = Global.game_objects.map_to_local(dest_cell)
 	if tween_anim:
@@ -112,7 +111,7 @@ func _move_to(curr_cell: Vector2i, dest_cell: Vector2i, scale_time: bool = true)
 			tween.kill()
 		tween = create_tween()
 		tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_LINEAR)
-		tween.tween_property(object, "position", local_pos, tween_time_changed);
+		tween.tween_property(object, "position", local_pos, mod_tween_time);
 	else:
 		object.position = local_pos
 	Global.game_entities.move_cell(curr_cell, dest_cell)
