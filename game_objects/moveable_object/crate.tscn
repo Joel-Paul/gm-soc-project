@@ -13,4 +13,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="GridMovement_C" parent="." unique_id=329636349 node_paths=PackedStringArray("object") instance=ExtResource("3_mf2ai")]
+effects_enabled = false
+can_jump = false
 object = NodePath("..")
+step_len = 0
