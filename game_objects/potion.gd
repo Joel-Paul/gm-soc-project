@@ -36,5 +36,7 @@ static func _slow_down(target: Node2D):
 		movement.set_step_length(1)
 
 static func _strength(target: Node2D):
-	pass
+	var movement = target.get_node_or_null("GridMovement_C")
+	if movement:
+		movement.push_strength = 50
 	
