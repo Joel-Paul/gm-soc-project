@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GMSoc prototype"
-run/main_scene="uid://b35lfx36wjw8q"
+run/main_scene="uid://rim03l1msdp0"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
