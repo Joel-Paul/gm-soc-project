@@ -10,7 +10,7 @@ z_index = 1
 script = ExtResource("1_rkbax")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1261806961]
-position = Vector2(0, -9)
+position = Vector2(0, -12)
 texture = ExtResource("2_rkbax")
 region_rect = Rect2(32, 160, 32, 32)
 
