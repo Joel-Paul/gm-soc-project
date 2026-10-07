@@ -24,9 +24,11 @@ var step_len := 1
 # Timer that clears buffered inputs after 0.1 seconds of inactivity
 @onready var buffer_timer: Timer = $BufferClear;
 var buffered_input: Array[Vector2i] = [];
+@onready var inventory_display: InventoryDisplay = $InventoryDisplay/Inventory
 
 func _ready() -> void:
 	movement.cell_pos = Global.game_objects.local_to_map(position)
+	inventory_display.setup(inventory)
 
 func _input(event: InputEvent) -> void:
 	_receive_direction(event)
