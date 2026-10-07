@@ -6,3 +6,7 @@ signal on_green_tile
 
 var game_objects: GameObjects = null
 var game_entities: GameEntities = null
+<<<<<<< Updated upstream
+=======
+	
+>>>>>>> Stashed changes
