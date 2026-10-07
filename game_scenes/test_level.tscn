@@ -76,7 +76,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="GameEntities" parent="." unique_id=2116111053 instance=ExtResource("6_e5pat")]
-tile_map_data = PackedByteArray("AAACAAIAAQAAAAAAAAAHAAcAAgAAAAAAAAAKAAQAAgAAAAAAAAALAAQAAgAAAAAAAAAMAAcAAgAAAAAAAAAOAAQAAgAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAACAAIAAQAAAAAAAAAHAAcAAgAAAAAAAAAKAAQAAgAAAAAAAAALAAQAAgAAAAAAAAAMAAcAAgAAAAAAAAAOAAQAAgAAAAAAAAALAAYAAgAAAAAAAAA=")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1537170692]
 position = Vector2(288, 162)

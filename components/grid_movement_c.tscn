@@ -4,3 +4,10 @@
 
 [node name="GridMovement_C" type="Node" unique_id=329636349]
 script = ExtResource("1_85evp")
+tween_anim = null
+effects_enabled = null
+can_jump = null
+step_len = null
+facing = null
+tween_time = null
+scale_tween = null
