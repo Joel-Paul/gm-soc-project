@@ -3,8 +3,6 @@ class_name Inventory
 
 @export var movement: GridMovement_C
 var slots_stack: Array[int] = []
-signal potion_added(type: Potion.Type)
-signal potion_removed()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,7 +16,6 @@ func _process(delta: float) -> void:
 func add_potion(potion: Potion.Type):
 	if slots_stack.size() < 3:
 		slots_stack.insert(0, potion)
-		potion_added.emit(potion)
 		return true
 	else:
 		return false
@@ -29,7 +26,6 @@ func throw() -> bool:
 		if _can_throw(aim):
 			var potion_type: Potion.Type = slots_stack.pop_front()
 			Global.game_objects.break_potion(aim, potion_type)
-			potion_removed.emit()
 			return true
 	return false
 	
