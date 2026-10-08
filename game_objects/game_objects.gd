@@ -1,6 +1,6 @@
 extends TileMapLayer
 class_name GameObjects
-enum Type {IS_WALL, IS_OBSTACLE, IS_POTION, IS_EFFECT, IS_MOVEABLE}
+enum Type {IS_WALL, IS_OBSTACLE, IS_POTION, IS_EFFECT, IS_MOVEABLE, IS_BUTTON}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,3 +27,17 @@ func find_tile(atlas: TileSetAtlasSource, is_object: int, potion_type: int) -> V
 			return coords
 	return Vector2i(-1, -1)
 	
+func update_button_group(button_group: int, active: bool) -> void:
+	var tiles = get_used_cells_by_id(4);
+	for coords in tiles:
+		var tile := get_cell_tile_data(coords);
+		
+		if (tile.get_custom_data("button_group") == button_group &&
+			tile.get_custom_data("is_object") != Type.IS_BUTTON):
+			var sprite_offset_x: int = (tile.get_custom_data("button_group") - 1) % 2 * 2;
+			var sprite_offset_y: int = floor((tile.get_custom_data("button_group") - 1) / 2) * 2;
+			
+			if (active):
+				set_cell(coords, 4, Vector2i(1 + sprite_offset_x, 1 + sprite_offset_y));
+			else:
+				set_cell(coords, 4, Vector2i(0 + sprite_offset_x, 1 + sprite_offset_y));
