@@ -3,13 +3,6 @@ class_name Player
 
 signal player_move
 
-const MOVE_DIRECTIONS: Dictionary = {
-	"up": Vector2i(0, -1),
-	"down": Vector2i(0, 1),
-	"left": Vector2i(-1, 0),
-	"right": Vector2i(1, 0)
-}
-
 #const MOVE_INTERVAL := 0.1
 #var move_cooldown := 0.0
 var has_superpower := false
@@ -40,7 +33,12 @@ func _physics_process(delta: float) -> void:
 			
 			var input: Vector2i = buffered_input[0];
 			
-			movement.move(input);
+			var player_cell_pos = movement.move(input) # move function here
+			var player_pos := Global.game_entities.map_to_local(player_cell_pos);
+			var screen_rect := get_viewport_rect()
+			if not screen_rect.has_point(get_canvas_transform() * player_pos):
+				Global.player_outside_screen.emit(movement.facing)
+			
 			if (abs(input.x) > 0):
 				$"Sprite2D".flip_h = (input.x < 0);
 				
@@ -60,16 +58,16 @@ func _process(delta: float) -> void:
 	$Sprite2D.scale = $Sprite2D.scale.lerp(Vector2(1,1), 0.26);
 
 func _receive_direction(event: InputEvent) -> void:
-	for direction in MOVE_DIRECTIONS:
+	for direction in GridMovement_C.DIRECTIONS:
 		if event.is_action_pressed(direction):
-			buffered_input.append(MOVE_DIRECTIONS[direction]);
+			buffered_input.append(GridMovement_C.DIRECTIONS[direction]);
 			
 			buffer_timer.start();
 
 func _receive_auto_direction() -> void:
-	for direction in MOVE_DIRECTIONS:
+	for direction in GridMovement_C.DIRECTIONS:
 		if Input.is_action_pressed(direction) and automove_timer.is_stopped():
-			buffered_input.append(MOVE_DIRECTIONS[direction]);
+			buffered_input.append(GridMovement_C.DIRECTIONS[direction]);
 			
 			buffer_timer.start();
 

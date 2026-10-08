@@ -19,6 +19,12 @@ var temp_push_strength := 0
 # anim variables
 var tween: Tween
 
+const DIRECTIONS: Dictionary = {
+	"up": Vector2i(0, -1),
+	"down": Vector2i(0, 1),
+	"left": Vector2i(-1, 0),
+	"right": Vector2i(1, 0)
+}
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -120,7 +126,7 @@ func _move_to(curr_cell: Vector2i, dest_cell: Vector2i, pre_dist := 0) -> Vector
 		tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_LINEAR)
 		if pre_dist:
 			tween.tween_interval(pre_dist * tween_time)
-		tween.tween_property(object, "position", local_pos, mod_tween_time);
+		tween.tween_property(object, "position", local_pos, mod_tween_time)
 	else:
 		object.position = local_pos
 	Global.game_entities.move_cell(curr_cell, dest_cell)
