@@ -10,7 +10,7 @@
 
 [node name="Background" parent="." unique_id=2109231554 instance=ExtResource("1_ibap5")]
 
-[node name="GameObjects2" parent="." unique_id=963262450 instance=ExtResource("2_ao6qk")]
+[node name="GameObjects" parent="." unique_id=963262450 instance=ExtResource("2_ao6qk")]
 
 [node name="Control" type="Control" parent="." unique_id=835882730]
 visible = false

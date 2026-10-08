@@ -81,7 +81,7 @@ func _path_logic(path_pos: Vector2i, dir: Vector2i, is_grounded: bool, pre_dist:
 		var pushed_pos: Vector2i = entity.get_node("GridMovement_C").move(dir, temp_push_strength, pre_dist)
 		if pushed_pos == path_pos:
 			return false
-
+	
 	var tile_data := Global.game_objects.get_cell_tile_data(path_pos)
 	if tile_data:
 		var tile_type: GameObjects.Type = tile_data.get_custom_data("is_object")
@@ -104,9 +104,22 @@ func _path_logic(path_pos: Vector2i, dir: Vector2i, is_grounded: bool, pre_dist:
 			GameObjects.Type.IS_OBSTACLE:
 				if is_grounded:
 					return false
+			GameObjects.Type.IS_BUTTON:
+				var button_group: int = tile_data.get_custom_data("button_group");
+				Global.game_objects.update_button_group(button_group, true);
 			_:
 				pass
-			
+	
+	# handle when buttons stop being pressed.
+	var prev_pos: Vector2i = path_pos - dir;
+	var prev_tile_data := Global.game_objects.get_cell_tile_data(prev_pos);
+	if (prev_tile_data):
+		var prev_tile_type: GameObjects.Type = prev_tile_data.get_custom_data("is_object");
+		
+		if (prev_tile_type == GameObjects.Type.IS_BUTTON):
+			var button_group: int = prev_tile_data.get_custom_data("button_group");
+			Global.game_objects.update_button_group(button_group, false);
+	
 	return true
 
 func _move_to(curr_cell: Vector2i, dest_cell: Vector2i, pre_dist := 0) -> Vector2i:
